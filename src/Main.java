@@ -37,12 +37,16 @@ public class Main {
         if (answer.equals("ДА")) {
             System.out.println("Начинаем играть");
             // первый блок
+            System.out.println("Выбери сложность игры (от 1 до 5):");
+            int difficultGame = scanner.nextInt();
+            System.out.println("Выбранная сложность:\t" + difficultGame);
         } else if (answer.equals("НЕТ")) {
             // второй блок
             System.out.println("Почему ты не захотел со мной играть? :(");
         } else {
-            System.out.println("Приходи ещё!");
+            System.out.println("Данные введены некорректно");
             // третий блок
+
         }
     }
 }
