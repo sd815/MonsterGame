@@ -9,8 +9,11 @@ public class Main {
 
         String person = "\uD83E\uDDD9";
         String monster = "\uD83E\uDDDF";
-
         String castle = "\uD83C\uDFF0";
+        String leftBlock = " | ";
+        String rightBlock = " | ";
+        String wall = " + —— + —— + —— + —— + —— + ";
+
 
         int personLive = 3;
         int sizeBoard = 5;
@@ -56,7 +59,23 @@ public class Main {
 
                     /*vvvvvvvvvvvvvvvvvv Вывод на экран игрового поля vvvvvvvvvvvvvvvvvv*/
                     for (int y = 1; y <= sizeBoard; y++) {
+                        System.out.println(wall);
+
                         for (int x = 1; x <= sizeBoard; x++) {
+                            System.out.println(leftBlock);
+
+                            if (personY == y && personX == x) {
+                                System.out.print(person);
+                            } else if (castleX == x && castleY == y) {
+                                System.out.print(castle);
+                            } else {
+                                System.out.print("  ");
+                            }
+                        }
+                        System.out.println(rightBlock);
+                    }
+                    System.out.println(wall);
+
 
                         }
                     }
