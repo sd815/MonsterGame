@@ -17,13 +17,13 @@ public class Main {
 
         int personLive = 3;
         int sizeBoard = 5;
-        String[] board = new String[sizeBoard * sizeBoard];
+
+        String[][] board = new String[sizeBoard][sizeBoard];
         for (int y = 1; y <= sizeBoard; y++) {
             for (int x = 1; x <= sizeBoard; x++) {
-                board[(y - 1) * sizeBoard + x - 1] = "  ";
+                board[y - 1][x - 1] = "  ";
             }
         }
-
 
         int personX;
         int personY;
@@ -33,8 +33,12 @@ public class Main {
         personX = 1 + sizeBoard / 2;
         personY = 1 + sizeBoard / 2;
 
-        board[(castleY - 1) * sizeBoard + castleX - 1] = castle;
-        board[(personY - 1) * sizeBoard + personX - 1] = person;
+
+        board[personY - 1][personX - 1] = "  ";
+        board[personY - 1] [personX - 1] = person;
+
+        board[castleY - 1][castleX - 1] = castle;
+        board[personY - 1][personX - 1] = person;
         // \n, \t - спец символ
         String gamingField = "+ —— + —— + —— + —— + —— +\n"
                 + "|    |    |    |    |    |\n"
@@ -67,17 +71,18 @@ public class Main {
                 while ((personLive > 0) && !(castleX == personX && castleY == personY)) {
 
                     /*vvvvvvvvvvvvvvvvvv Вывод на экран игрового поля vvvvvvvvvvvvvvvvvv*/
+
+
                     for (int y = 1; y <= sizeBoard; y++) {
-                        System.out.println(wall);
-
                         for (int x = 1; x <= sizeBoard; x++) {
-                            System.out.println(leftBlock);
-                            System.out.print(board[(y - 1) * sizeBoard + x - 1]);
+                            board[y - 1][x - 1] = "  ";
                         }
-                        System.out.println(rightBlock);
                     }
-                    System.out.println(wall);
-
+                    int countMonster = sizeBoard * sizeBoard - sizeBoard - 1;
+                    for (int i = 0; i < countMonster; i++) {
+                        board[random.nextInt(sizeBoard - 1)][random.nextInt(sizeBoard)] = monster;
+                    }
+                    board[castleY - 1][castleX - 1] = castle;
 
                     /*^^^^^^^^^^^^^^^^^^ Вывод на экран игрового поля ^^^^^^^^^^^^^^^^^^*/
 
@@ -99,6 +104,31 @@ public class Main {
                                 personX + ", " + personY + "\nХод номер: " + step);
                     } else {
                         System.out.println("Координаты не изменены");
+
+                        if (board[y - 1][x - 1].equals("  ")) {
+                            board[personY - 1][personX - 1] = "  ";
+
+                            personX = x;
+                            personY = y;
+                            step++;
+
+                            System.out.println(
+                                    "Ход корректный; новые координаты: "
+                                            + personX + ", " + personY
+                                            + "\nХод номер: " + step
+                            );
+                        } else if (board[y - 1][x - 1].equals(castle)) {
+                            System.out.println("Вы прошли игру!");
+                            if (personLive <= 0) {
+                                break;
+                            }
+                            if (personLive <= 0) {
+                                System.out.println("Закончились жизни. Итог: ...");
+                            }
+
+                        } else {
+                            System.out.println("Решите задачу.");
+                        }
                     }
                 }
                 break;
@@ -111,6 +141,8 @@ public class Main {
             default:
                 System.out.println("Данные введены некорректно");
                 // третий блок
+
+
 
 
         }
