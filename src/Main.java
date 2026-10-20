@@ -98,7 +98,6 @@ public class Main {
                     } else if (Math.abs(x - personX) == 1 || Math.abs(y - personY) == 1) {
                         if (board[y - 1][x - 1].equals("  ")) {
                             board[personY - 1][personX - 1] = "  ";
-
                             personX = x;
                             personY = y;
                             board[personY - 1][personX - 1] = person;
@@ -114,6 +113,7 @@ public class Main {
                             break;
                         } else {
                             System.out.println("Решите задачу.");
+                            boolean success = taskMonster();
                         }
                     } else {
                         System.out.println("Координаты не изменены");
@@ -141,4 +141,22 @@ public class Main {
 
         }
     }
+    static boolean taskMonster() {
+        Random random = new Random();
+        int a = random.nextInt(100);
+        int b = random.nextInt(100);
+        int trueAnswer = a + b;
+        System.out.println("Реши пример: " + a + " + " + b + " = ?");
+        Scanner scanner = new Scanner(System.in);
+        int ans = scanner.nextInt();
+        if (trueAnswer == ans) {
+            System.out.println("Верно! Ты победил монстра");
+            return true;
+        } else {
+            System.out.println("Ты проиграл эту битву!");
+            return false;
+        }
+    }
+
+
 }
