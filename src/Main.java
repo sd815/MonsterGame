@@ -30,12 +30,13 @@ public class Main {
         int step = 0;
         int castleY = 1;
         int castleX = 1 + random.nextInt(sizeBoard);
-        personX = 1 + sizeBoard / 2;
-        personY = 1 + sizeBoard / 2;
+        personX = 1 ;
+        personY = sizeBoard;
 
-
-        board[personY - 1][personX - 1] = "  ";
-        board[personY - 1] [personX - 1] = person;
+        int countMonster = sizeBoard * sizeBoard - sizeBoard - 1;
+        for (int i = 0; i < countMonster; i++) {
+            board[random.nextInt(sizeBoard - 1)][random.nextInt(sizeBoard)] = monster;
+        }
 
         board[castleY - 1][castleX - 1] = castle;
         board[personY - 1][personX - 1] = person;
@@ -68,24 +69,22 @@ public class Main {
                 System.out.println("Выбранная сложность:\t" + difficultGame);
 
 
-                while ((personLive > 0) && !(castleX == personX && castleY == personY)) {
+                while (true) {
 
                     /*vvvvvvvvvvvvvvvvvv Вывод на экран игрового поля vvvvvvvvvvvvvvvvvv*/
+                    for (String[] row : board) {
+                        System.out.println(wall);
 
-
-                    for (int y = 1; y <= sizeBoard; y++) {
-                        for (int x = 1; x <= sizeBoard; x++) {
-                            board[y - 1][x - 1] = "  ";
+                        for (String col : row ) {
+                            System.out.print(leftBlock);
+                            System.out.print(col);
                         }
+                        System.out.println(rightBlock);
                     }
-                    int countMonster = sizeBoard * sizeBoard - sizeBoard - 1;
-                    for (int i = 0; i < countMonster; i++) {
-                        board[random.nextInt(sizeBoard - 1)][random.nextInt(sizeBoard)] = monster;
-                    }
-                    board[castleY - 1][castleX - 1] = castle;
+                    System.out.println(wall);
+
 
                     /*^^^^^^^^^^^^^^^^^^ Вывод на экран игрового поля ^^^^^^^^^^^^^^^^^^*/
-
 
 
                     System.out.println("Введите куда будет ходить персонаж (ход возможен только по вертикали и горизонтали на одну клетку)");
@@ -97,19 +96,12 @@ public class Main {
                     if (x != personX && y != personY) {
                         System.out.println("Некорректный ход");
                     } else if (Math.abs(x - personX) == 1 || Math.abs(y - personY) == 1) {
-                        personX = x;
-                        personY = y;
-                        step += 1;
-                        System.out.println("Ход корректный; Новые координаты: " +
-                                personX + ", " + personY + "\nХод номер: " + step);
-                    } else {
-                        System.out.println("Координаты не изменены");
-
                         if (board[y - 1][x - 1].equals("  ")) {
                             board[personY - 1][personX - 1] = "  ";
 
                             personX = x;
                             personY = y;
+                            board[personY - 1][personX - 1] = person;
                             step++;
 
                             System.out.println(
@@ -119,17 +111,19 @@ public class Main {
                             );
                         } else if (board[y - 1][x - 1].equals(castle)) {
                             System.out.println("Вы прошли игру!");
-                            if (personLive <= 0) {
-                                break;
-                            }
-                            if (personLive <= 0) {
-                                System.out.println("Закончились жизни. Итог: ...");
-                            }
-
+                            break;
                         } else {
                             System.out.println("Решите задачу.");
                         }
+                    } else {
+                        System.out.println("Координаты не изменены");
                     }
+                    if (personLive <= 0) {
+                        break;
+                    }
+                }
+                if (personLive <= 0) {
+                    System.out.println("Закончились жизни. Итог: ...");
                 }
                 break;
 
