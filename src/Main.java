@@ -6,13 +6,10 @@ public class Main {
         Random random = new Random();
 
 
-
         String person = "\uD83E\uDDD9";
         String monster = "\uD83E\uDDDF";
         String castle = "\uD83C\uDFF0";
-        String leftBlock = " | ";
-        String rightBlock = " | ";
-        String wall = " + —— + —— + —— + —— + —— + ";
+
 
 
         int personLive = 3;
@@ -30,7 +27,7 @@ public class Main {
         int step = 0;
         int castleY = 1;
         int castleX = 1 + random.nextInt(sizeBoard);
-        personX = 1 ;
+        personX = 1;
         personY = sizeBoard;
 
         int countMonster = sizeBoard * sizeBoard - sizeBoard - 1;
@@ -70,22 +67,8 @@ public class Main {
 
 
                 while (true) {
-
-                    /*vvvvvvvvvvvvvvvvvv Вывод на экран игрового поля vvvvvvvvvvvvvvvvvv*/
-                    for (String[] row : board) {
-                        System.out.println(wall);
-
-                        for (String col : row ) {
-                            System.out.print(leftBlock);
-                            System.out.print(col);
-                        }
-                        System.out.println(rightBlock);
-                    }
-                    System.out.println(wall);
-
-
-                    /*^^^^^^^^^^^^^^^^^^ Вывод на экран игрового поля ^^^^^^^^^^^^^^^^^^*/
-
+                    board[personY - 1][personX - 1] = person;
+                    outputBoard(board, personLive);
 
                     System.out.println("Введите куда будет ходить персонаж (ход возможен только по вертикали и горизонтали на одну клетку)");
                     System.out.println("Координаты персонажа - (x: " + personX + ", y: " + personY + ")");
@@ -113,7 +96,14 @@ public class Main {
                             break;
                         } else {
                             System.out.println("Решите задачу.");
-                            boolean success = taskMonster();
+                            if (taskMonster(difficultGame)) {
+                                board[personY - 1][personX - 1] = "  ";
+                                personX = x;
+                                personY = y;
+                                step++;
+                            } else {
+                                personLive--;
+                            }
                         }
                     } else {
                         System.out.println("Координаты не изменены");
@@ -137,26 +127,46 @@ public class Main {
                 // третий блок
 
 
-
-
         }
     }
-    static boolean taskMonster() {
-        Random random = new Random();
-        int a = random.nextInt(100);
-        int b = random.nextInt(100);
-        int trueAnswer = a + b;
-        System.out.println("Реши пример: " + a + " + " + b + " = ?");
-        Scanner scanner = new Scanner(System.in);
-        int ans = scanner.nextInt();
-        if (trueAnswer == ans) {
-            System.out.println("Верно! Ты победил монстра");
-            return true;
+
+    static boolean taskMonster(int difficultGame) {
+        if (difficultGame == 1) {
+            Random random = new Random();
+            int a = random.nextInt(100);
+            int b = random.nextInt(100);
+            int trueAnswer = a + b;
+            System.out.println("Реши пример: " + a + " + " + b + " = ?");
+            Scanner scanner = new Scanner(System.in);
+            int ans = scanner.nextInt();
+            if (trueAnswer == ans) {
+                System.out.println("Верно! Ты победил монстра");
+                return true;
+            } else {
+                System.out.println("Ты проиграл эту битву!");
+                return false;
+            }
+
         } else {
-            System.out.println("Ты проиграл эту битву!");
-            return false;
+            /*.......*/
+            return true;
         }
     }
 
+    static void outputBoard(String[][] board, int live) {
+        String leftBlock = " | ";
+        String rightBlock = " | ";
+        String wall = " + —— + —— + —— + —— + —— + ";
+        for (String[] row : board) {
+            System.out.println(wall);
+            for (String col : row) {
+                System.out.print(leftBlock);
+                System.out.print(col);
+            }
+            System.out.println(rightBlock);
+        }
+        System.out.println(wall);
+        System.out.println("Количество жизней:\t" + live + "\n");
+    }
 
 }
