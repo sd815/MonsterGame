@@ -5,12 +5,9 @@ public class Main {
     public static void main(String[] args) {
         Random random = new Random();
 
-
         String person = "\uD83E\uDDD9";
         String monster = "\uD83E\uDDDF";
         String castle = "\uD83C\uDFF0";
-
-
 
         int personLive = 3;
         int sizeBoard = 5;
