@@ -65,7 +65,7 @@ public class Main {
                 System.out.println("Выбранная сложность:\t" + difficultGame);
 
                 while (true) {
-                    //board[personY - 1][personX - 1] = person;
+                    board[person.getY() - 1][person.getX() - 1] = person.getImage();
                     outputBoard(board, person.getLive());
 
                     System.out.println("Введите куда будет ходить персонаж (ход возможен только по вертикали и горизонтали на одну клетку)");

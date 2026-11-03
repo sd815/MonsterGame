@@ -3,6 +3,9 @@ import java.util.Scanner;
 public class BigMonster extends Monster {
     BigMonster(int sizeBoard) {
         super(sizeBoard);
+        // дополнительная логика BigMonster
+        setImage("\uD83D\uDC79");
+
     }
 
     @Override
