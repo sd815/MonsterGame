@@ -7,8 +7,6 @@ public class Main {
         int sizeBoard = 5;
         Person person = new Person(sizeBoard);
 
-        //String person = "\uD83E\uDDD9";
-        String monster = "\uD83E\uDDDF";
         String castle = "\uD83C\uDFF0";
 
         //int personLive = 3;
@@ -27,24 +25,29 @@ public class Main {
 
 
         int countMonster = sizeBoard * sizeBoard - sizeBoard - 1;
-        for (int i = 0; i < countMonster; i++) {
-            board[random.nextInt(sizeBoard - 1)][random.nextInt(sizeBoard)] = monster;
+        Monster[] monsters = new Monster[countMonster];
+        int count = 0;
+
+        while (count < countMonster) {
+            Monster monster;
+
+            if (random.nextBoolean()) {
+                monster = new Monster(sizeBoard);
+            } else {
+                monster = new BigMonster(sizeBoard);
+            }
+
+            int row = monster.getY() - 1;
+            int column = monster.getX() - 1;
+
+            if (board[row][column].equals("  ")) {
+                board[row][column] = monster.getImage();
+                monsters[count] = monster;
+                count++;
+            }
         }
 
         board[castleY - 1][castleX - 1] = castle;
-        //board[personY - 1][personX - 1] = person;
-        // \n, \t - спец символ
-        String gamingField = "+ —— + —— + —— + —— + —— +\n"
-                + "|    |    |    |    |    |\n"
-                + "+ —— + —— + —— + —— + —— +\n"
-                + "|    |    |    |    |    |\n"
-                + "+ —— + —— + —— + —— + —— +\n"
-                + "|    |    | " + monster + " |    |    |\n"
-                + "+ —— + —— + —— + —— + —— +\n"
-                + "|    |    |    |    |    |\n"
-                + "+ —— + —— + —— + —— + —— +\n"
-                + "| " + person + " |    |    |    |    |\n"
-                + "+ —— + —— + —— + —— + —— +";
 
         System.out.println("Привет! Ты готов начать играть в игру? (Напиши: ДА или НЕТ)");
 
@@ -87,12 +90,17 @@ public class Main {
                             break;
                         } else {
                             System.out.println("Решите задачу.");
-                            if (taskMonster(difficultGame)) {
-                                board[person.getY() - 1][person.getX() - 1] = "  ";
-                                person.move(x, y);
-                                step++;
-                            } else {
-                                person.downLive();
+                            for (Monster monster : monsters) {
+                                if (monster.conflictPerson(x, y)) {
+                                    if (monster.taskMonster(difficultGame)) {
+                                        board[person.getY() - 1][person.getX() - 1] = "  ";
+                                        person.move(x, y);
+                                        step++;
+                                    } else {
+                                        person.downLive();
+                                    }
+                                    break;
+                                }
                             }
                         }
                     } else {
