@@ -5,9 +5,7 @@ public class Main {
     public static void main(String[] args) {
         Random random = new Random();
         int sizeBoard = 5;
-        Person person = new Person();
-        person.x = 1 + random.nextInt(sizeBoard);
-        person.y = sizeBoard;
+        Person person = new Person(sizeBoard);
 
         //String person = "\uD83E\uDDD9";
         String monster = "\uD83E\uDDDF";
@@ -23,13 +21,10 @@ public class Main {
             }
         }
 
-        int personX;
-        int personY;
         int step = 0;
         int castleY = 1;
         int castleX = 1 + random.nextInt(sizeBoard);
-        personX = 1;
-        personY = sizeBoard;
+
 
         int countMonster = sizeBoard * sizeBoard - sizeBoard - 1;
         for (int i = 0; i < countMonster; i++) {
@@ -68,24 +63,23 @@ public class Main {
 
                 while (true) {
                     //board[personY - 1][personX - 1] = person;
-                    outputBoard(board, person.live());
+                    outputBoard(board, person.getLive());
 
                     System.out.println("Введите куда будет ходить персонаж (ход возможен только по вертикали и горизонтали на одну клетку)");
-                    System.out.println("Координаты персонажа - (x: " + personX + ", y: " + personY + ")");
-
+                    System.out.println("Координаты персонажа - (x: " + person.getX() + ", y: " + person.getY() + ")");
                     int x = scanner.nextInt();
                     int y = scanner.nextInt();
 
                     if (person.isMoveCorrect(x, y)) {
                         String next = board[y - 1][x - 1];
                         if (next.equals("  ")) {
-                            board[personY - 1][personX - 1] = "  ";
+                            board[person.getY() - 1][person.getX() - 1] = "  ";
                             person.move(x, y);
                             step++;
 
                             System.out.println(
                                     "Ход корректный; новые координаты: "
-                                            + personX + ", " + personY
+                                            + person.getX() + ", " + person.getY()
                                             + "\nХод номер: " + step
                             );
                         } else if (next.equals(castle)) {
@@ -94,22 +88,21 @@ public class Main {
                         } else {
                             System.out.println("Решите задачу.");
                             if (taskMonster(difficultGame)) {
-                                board[personY - 1][personX - 1] = "  ";
-                                personX = x;
-                                personY = y;
+                                board[person.getY() - 1][person.getX() - 1] = "  ";
+                                person.move(x, y);
                                 step++;
                             } else {
-                                person.live--;
+                                person.downLive();
                             }
                         }
                     } else {
                         System.out.println("Координаты не изменены");
                     }
-                    if (person.live <= 0) {
+                    if (person.getLive() <= 0) {
                         break;
                     }
                 }
-                if (person.live <= 0) {
+                if (person.getLive() <= 0) {
                     System.out.println("Закончились жизни. Итог: ...");
                 }
                 break;
