@@ -30,12 +30,13 @@ public class Monster {
         return personX == x && personY == y;
     }
     public boolean taskMonster(int difficultGame) {
+        System.out.println("Метод taskMonster запущен!");
         System.out.println("Решите задачу:");
 
         if (difficultGame == 1) {
             Random random = new Random();
-            int a = random.nextInt(100);
-            int b = random.nextInt(100);
+            int a = random.nextInt(100 * difficultGame);
+            int b = random.nextInt(100 * difficultGame);
             int trueAnswer = a + b;
 
             System.out.println("Реши пример: " + a + " + " + b + " = ?");
@@ -51,7 +52,7 @@ public class Monster {
             }
         } else {
             Random random = new Random();
-            int a = random.nextInt(200 * difficultGame);
+            int a = random.nextInt(300 * difficultGame);
             int b = random.nextInt(200 * difficultGame);
             int trueAnswer = a + b;
 

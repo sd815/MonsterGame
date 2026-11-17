@@ -73,12 +73,14 @@ public class Main {
 
                             System.out.println("Ход корректный; новые координаты: " + person.getX() + ", " + person.getY() + "\nХод номер: " + step);
                         } else if (next.equals(castle)) {
-                            System.out.println("Вы прошли игру!");
+                            System.out.println("Вы прошли игру!\uD83C\uDFC6");
+                            printSummary(step, person, difficultGame);
                             break;
                         } else {
-                            System.out.println("Решите задачу.");
                             for (Monster monster : monsters) {
                                 if (monster.conflictPerson(x, y)) {
+                                    System.out.println("Монстр найден!");
+                                    System.out.println("Вызываем taskMonster!");
                                     if (monster.taskMonster(difficultGame)) {
                                         board[person.getY() - 1][person.getX() - 1] = "  ";
                                         person.move(x, y);
@@ -98,7 +100,7 @@ public class Main {
                     }
                 }
                 if (person.getLive() <= 0) {
-                    System.out.println("Закончились жизни. Итог: ...");
+                    System.out.println("Закончились жизни.\uD83D\uDD2B");
                 }
                 break;
 
@@ -120,10 +122,10 @@ public class Main {
             Scanner scanner = new Scanner(System.in);
             int ans = scanner.nextInt();
             if (trueAnswer == ans) {
-                System.out.println("Верно! Ты победил монстра");
+                System.out.println("Верно! Ты победил монстра \uD83C\uDFB0");
                 return true;
             } else {
-                System.out.println("Ты проиграл эту битву!");
+                System.out.println("Ты проиграл эту битву! \uD83D\uDD79");
                 return false;
             }
 
@@ -145,5 +147,12 @@ public class Main {
         }
         System.out.println(wall);
         System.out.println("Количество жизней:\t" + live + "\n");
+    }
+    static void printSummary(int steps, Person person, int difficulty) {
+    System.out.println("ИТОГ!");
+    System.out.println("Сложность:" + difficulty);
+    System.out.println("Пройдено ходов:" + steps);
+    System.out.println("Осталось жизней:" + person.getLive());
+    System.out.println("\uD83D\uDC8C");
     }
 }
