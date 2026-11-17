@@ -51,8 +51,8 @@ public class Monster {
             }
         } else {
             Random random = new Random();
-            int a = random.nextInt(100 * difficultGame);
-            int b = random.nextInt(100 * difficultGame);
+            int a = random.nextInt(200 * difficultGame);
+            int b = random.nextInt(200 * difficultGame);
             int trueAnswer = a + b;
 
             System.out.println("Реши пример: " + a + " + " + b + " = ?");

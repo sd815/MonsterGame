@@ -6,23 +6,17 @@ public class Main {
         Random random = new Random();
         int sizeBoard = 5;
         Person person = new Person(sizeBoard);
-
         String castle = "\uD83C\uDFF0";
-
-        //int personLive = 3;
-
-
         String[][] board = new String[sizeBoard][sizeBoard];
+
         for (int y = 1; y <= sizeBoard; y++) {
             for (int x = 1; x <= sizeBoard; x++) {
                 board[y - 1][x - 1] = "  ";
             }
         }
-
         int step = 0;
         int castleY = 1;
         int castleX = 1 + random.nextInt(sizeBoard);
-
 
         int countMonster = sizeBoard * sizeBoard - sizeBoard - 1;
         Monster[] monsters = new Monster[countMonster];
@@ -46,16 +40,13 @@ public class Main {
                 count++;
             }
         }
-
         board[castleY - 1][castleX - 1] = castle;
 
         System.out.println("Привет! Ты готов начать играть в игру? (Напиши: ДА или НЕТ)");
 
         Scanner scanner = new Scanner(System.in);
         String answer = scanner.nextLine();
-
         System.out.println("Ваш ответ:\t" + answer);
-
 
         switch (answer) {
             case "ДА":
@@ -80,11 +71,7 @@ public class Main {
                             person.move(x, y);
                             step++;
 
-                            System.out.println(
-                                    "Ход корректный; новые координаты: "
-                                            + person.getX() + ", " + person.getY()
-                                            + "\nХод номер: " + step
-                            );
+                            System.out.println("Ход корректный; новые координаты: " + person.getX() + ", " + person.getY() + "\nХод номер: " + step);
                         } else if (next.equals(castle)) {
                             System.out.println("Вы прошли игру!");
                             break;
@@ -115,19 +102,14 @@ public class Main {
                 }
                 break;
 
-
             case "НЕТ":
                 // второй блок
                 System.out.println("Почему ты не захотел со мной играть? :(");
                 break;
             default:
                 System.out.println("Данные введены некорректно");
-                // третий блок
-
-
         }
     }
-
     static boolean taskMonster(int difficultGame) {
         if (difficultGame == 1) {
             Random random = new Random();
@@ -146,11 +128,9 @@ public class Main {
             }
 
         } else {
-            /*.......*/
             return true;
         }
     }
-
     static void outputBoard(String[][] board, int live) {
         String leftBlock = " | ";
         String rightBlock = " | ";
@@ -166,5 +146,4 @@ public class Main {
         System.out.println(wall);
         System.out.println("Количество жизней:\t" + live + "\n");
     }
-
 }
